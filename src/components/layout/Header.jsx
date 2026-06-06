@@ -15,7 +15,7 @@ export default function Header({ title }) {
       <div className="header-actions">
         <div className="header-bell">
           <Bell size={20} />
-          <span className="header-bell-dot" />
+          <span className="header-bell-dot" onClick={() => alert("Not Updated Yet")}/>
         </div>
         <div className="header-user">
           <div className="header-avatar">{user?.avatar}</div>
