@@ -1,27 +1,23 @@
 # ---- Build Stage ----
-FROM node:20-alpine AS build
+FROM node:22-alpine AS build
 
 WORKDIR /app
 
 COPY package.json package-lock.json ./
-RUN npm ci
+RUN npm install
 
 COPY . .
 RUN npm run build
 
 # ---- Production Stage ----
-FROM node:20-alpine AS production
+FROM nginx:stable-alpine AS production
 
-WORKDIR /app
+# Copy built assets to nginx html directory
+COPY --from=build /app/dist /usr/share/nginx/html
 
-RUN npm install -g serve@14
+# Copy custom nginx config for SPA routing
+COPY nginx.conf /etc/nginx/conf.d/default.conf
 
-COPY --from=build /app/dist ./dist
+EXPOSE 10000
 
-# Railway injects PORT at runtime; default to 3000
-ENV PORT=3000
-
-EXPOSE $PORT
-
-# serve the SPA — `-s` enables single-page-app mode (rewrites all routes to index.html)
-CMD ["sh", "-c", "serve -s dist -l $PORT"]
+CMD ["nginx", "-g", "daemon off;"]
