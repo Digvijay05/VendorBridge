@@ -1,70 +1,108 @@
 # VendorBridge — Enterprise Vendor & Procurement Management Portal
 
-VendorBridge is a modern, high-performance, glassmorphic SaaS portal designed to streamline the enterprise procurement lifecycle. It bridges the gap between organization requesters, procurement managers, vendors, and finance approvers. 
+VendorBridge is a modern, high-performance, glassmorphic SaaS portal designed to streamline the enterprise procurement lifecycle. It bridges the gap between organization requesters, procurement managers, vendors, and finance approvers.
 
-The application is built using **React + Vite**, styled with a customized **Vanilla CSS design system**, and powered by a centralized local state repository (with role-based simulated sessions and complete CRUD operation flows).
+The application is built using **React + Vite**, styled with a customized **Vanilla CSS design system**, and powered by a centralized local state repository (with role-based simulated sessions and complete CRUD flows).
 
 ---
 
-## 🚀 Key Features
+## 📸 Core Pages & Walkthrough
 
-### 🔐 1. Multi-Role Authentication & Access Control
-- **Admin**: System-wide configuration, user management, and activity monitoring.
-- **Procurement Manager**: Manage vendors, build Requests for Quotation (RFQs), compare bids, and draft Purchase Orders.
-- **Requester / Approver**: Raise procurement requests, approve RFQs, sign off on Purchase Orders, and authorize Invoice payments.
-- **Vendor**: View assigned RFQs, submit binding quotations, track POs, and generate invoices.
-- Centralized `AuthContext` to persist sessions, handle logouts, and enforce page routing/guard rails.
+### 🔐 1. Authentication Portal
+Every role accesses their customized workstation via a central login interface. Demo credentials are dynamically pre-loaded for ease of testing.
+* **Demonstration**: User logs in with `officer@vendorbridge.com` or `vendor@vendorbridge.com` to test customized dashboards.
+* **File Location**: [LoginPage.jsx](file:///c:/Users/ROG%20Strix/Desktop/LEARNING/PROJECTS/VendorBridge/src/pages/LoginPage.jsx)
 
-### 📊 2. Dynamic Dashboard & Procurement Analytics
-- Glassmorphic stat cards displaying critical metrics (Total Spend, Active RFQs, Pending Approvals, Action Items).
-- Interactive charting with **Recharts**:
-  - **Spend Trend**: Area chart showing monthly spend patterns.
-  - **Category Breakdown**: Pie chart displaying spend across departments (IT, Operations, Logistics, etc.).
-  - **RFQ Success Rate**: Bar chart depicting completed vs canceled RFQs.
-- Quick action panels adapted to the logged-in user's role.
+![Login Portal](./docs/screenshots/login.png)
 
-### 🏢 3. Vendor Directory & Management
-- Searchable and filterable data tables for vendor records.
-- Status segmentation tabs: *All*, *Active*, *Pending*, *Blocked* with dynamic item counts.
-- Add Vendor modal capturing company name, category, GST number, contact person, email, and phone.
+---
 
-### 📝 4. Request for Quotation (RFQ) Wizard
-- Interactive 3-step wizard for creating RFQs:
-  - **Step 1: Details**: Title, category, deadline date, and description.
-  - **Step 2: Line Items**: Dynamic table row editor to specify item names, quantities, and units.
-  - **Step 3: Vendor Assignment**: Multi-select assignment of registered vendors to bid on the RFQ.
+### 📊 2. Dynamic Command Dashboard
+The dashboard displays high-priority cards, analytics trends, and pending tasks tailored to the active user role.
+* **Recharts Visualizations**: Features a dynamic *Spend Trend* area chart showing 6-month cycles.
+* **Interactive List**: Recent Purchase Orders are listed with status indicator badges.
+* **File Location**: [DashboardPage.jsx](file:///c:/Users/ROG%20Strix/Desktop/LEARNING/PROJECTS/VendorBridge/src/pages/DashboardPage.jsx)
 
-### 🤝 5. Quotation Submission & Side-by-Side Comparison
-- **Vendor Portal**: Secure form where assigned vendors submit unit pricing, delivery timelines, and special notes.
-- **Comparison Engine**: Side-by-side comparison matrix of all submitted vendor bids.
-- **Smart Highlighting**: Automatically highlights the lowest-cost bid for every line item to help procurement managers optimize costs.
-- One-click winning bid selection to transition RFQ to Purchase Order drafting.
+![Command Dashboard](./docs/screenshots/dashboard.png)
 
-### ✍️ 6. Multi-Stage Approval Workflow
-- Center list of pending approvals (RFQs, POs, Invoices) requiring approver action.
-- Sliding side-panel drawer displaying detailed previews of the item, line items, and audit trails.
-- Actionable Approve and Reject modals with mandatory rejection comment fields.
+---
 
-### 📄 7. PO & Invoice Generation (with PDF Export)
-- Auto-generation of Purchase Orders from winning bids.
-- Print-ready purchase order and invoice layouts designed like professional invoices.
-- **html2pdf.js** integration allowing users to download official POs and Invoices as PDFs.
-- Progression stepper tracking stages: *Draft -> Approved -> Invoice Generated -> Paid*.
+### 🏢 3. Vendor Directory
+The vendor directory provides sorting, search filters, and status categorization (All, Active, Pending, Blocked).
+* **Modal Operations**: Includes an "Add Vendor" form wizard capturing GST registration numbers, contacts, and categories.
+* **File Location**: [VendorsPage.jsx](file:///c:/Users/ROG%20Strix/Desktop/LEARNING/PROJECTS/VendorBridge/src/pages/VendorsPage.jsx)
+
+![Vendor Management](./docs/screenshots/vendors.png)
+
+---
+
+### 📝 4. Request for Quotation (RFQ) 3-Step Wizard
+Allows procurement managers to create and dispatch new bid requests.
+* **Step 1: Details**: Title, category, deadline date, and description.
+* **Step 2: Line Items**: Dynamic row adder/remover for items, quantities, and units.
+* **Step 3: Assignments**: Assign specific vendors to receive the RFQ.
+* **File Location**: [CreateRFQPage.jsx](file:///c:/Users/ROG%20Strix/Desktop/LEARNING/PROJECTS/VendorBridge/src/pages/CreateRFQPage.jsx)
+
+![Create RFQ Wizard](./docs/screenshots/create_rfq.png)
+
+---
+
+### 🤝 5. Side-by-Side Quotation Comparison Portal
+Allows procurement officers to analyze incoming vendor bids.
+* **Smart Cost Highlighting**: Dynamically highlights the lowest-priced line items in green.
+* **Bid Awarding**: Select the winning bid to trigger the purchase order draft stage.
+* **File Location**: [QuotationComparisonPage.jsx](file:///c:/Users/ROG%20Strix/Desktop/LEARNING/PROJECTS/VendorBridge/src/pages/QuotationComparisonPage.jsx)
+
+![Quotation Comparison Matrix](./docs/screenshots/quotations.png)
+
+---
+
+### ✍️ 6. Approval Chain Workflow
+RFQs, Purchase Orders, and Invoice payments must progress through L1/L2 approval verification.
+* **Drawer Review**: A sliding panel presents line items and history trails.
+* **Actions**: One-click approval or rejection with mandatory remark comments.
+* **File Location**: [ApprovalWorkflowPage.jsx](file:///c:/Users/ROG%20Strix/Desktop/LEARNING/PROJECTS/VendorBridge/src/pages/ApprovalWorkflowPage.jsx)
+
+![Approval Board](./docs/screenshots/approvals.png)
+
+---
+
+### 📄 7. Purchase Order & Invoice Detail (with PDF Export)
+Generates print-ready billing documents.
+* **Export Utilities**: Integrates `html2pdf.js` to download official POs and invoices as PDFs.
+* **Print Stylesheet**: Built-in CSS prints invoices cleanly without UI headers or sidebars.
+* **File Location**: [POInvoicePage.jsx](file:///c:/Users/ROG%20Strix/Desktop/LEARNING/PROJECTS/VendorBridge/src/pages/POInvoicePage.jsx)
+
+![PO and Invoice Detail](./docs/screenshots/po_detail.png)
+
+---
+
+### 📋 8. Immutable System Audit Logs
+Every system transaction, bid submission, and approval is recorded in an append-only timeline.
+* **Filters**: View logs by RFQ, Approvals, Invoices, or User activity.
+* **File Location**: [ActivityLogsPage.jsx](file:///c:/Users/ROG%20Strix/Desktop/LEARNING/PROJECTS/VendorBridge/src/pages/ActivityLogsPage.jsx)
+
+![Audit Timeline](./docs/screenshots/activity.png)
+
+---
+
+### 📈 9. Analytics & Procurement Reports
+High-level operational stats on total spend, fulfillment rates, and department budgets.
+* **Visualizations**: Features *Spend by Category* pie charts and *Fulfillment* stats.
+* **File Location**: [ReportsPage.jsx](file:///c:/Users/ROG%20Strix/Desktop/LEARNING/PROJECTS/VendorBridge/src/pages/ReportsPage.jsx)
+
+![Procurement Analytics](./docs/screenshots/reports.png)
 
 ---
 
 ## 🛠️ Technology Stack
 
-- **Core**: React 18, Vite (Fast HMR)
+- **Core**: React 18, Vite
 - **Routing**: React Router DOM (v6)
-- **Charts**: Recharts (SVG-based responsive charts)
-- **Icons**: Lucide React (Clean, scalable icons)
-- **PDF Generation**: html2pdf.js (Client-side HTML-to-PDF rendering)
-- **Styling**: Modern Vanilla CSS
-  - Custom variables for dark mode and neon accent palettes (`#6366f1` Indigo, `#10b981` Emerald, `#f59e0b` Amber).
-  - Modern layout techniques (CSS Grid, Flexbox, Aspect-Ratio).
-  - Premium glassmorphism effects (`backdrop-filter: blur(12px)`).
-  - Smooth micro-animations for interactive elements.
+- **Charts**: Recharts
+- **Icons**: Lucide React
+- **PDF Generation**: html2pdf.js
+- **Styling**: Vanilla CSS with customized variable mappings for dark mode glassmorphism (`backdrop-filter`).
 
 ---
 
@@ -72,36 +110,23 @@ The application is built using **React + Vite**, styled with a customized **Vani
 
 ```text
 VendorBridge/
+├── docs/
+│   └── screenshots/         # Walkthrough screenshots
 ├── public/                  # Static assets & SVG icons
 ├── src/
-│   ├── assets/              # Default images and styles
 │   ├── context/
 │   │   ├── AuthContext.jsx      # Session management & roles
 │   │   ├── AppDataContext.jsx   # Core CRUD state reducer (RFQs, POs, etc.)
 │   │   └── ToastContext.jsx     # Global feedback alerts
-│   ├── pages/
-│   │   ├── LoginPage.jsx
-│   │   ├── RegisterPage.jsx
-│   │   ├── DashboardPage.jsx
-│   │   ├── VendorsPage.jsx
-│   │   ├── CreateRFQPage.jsx
-│   │   ├── SubmitQuotationPage.jsx
-│   │   ├── QuotationComparisonPage.jsx
-│   │   ├── ApprovalWorkflowPage.jsx
-│   │   ├── PurchaseOrdersListPage.jsx
-│   │   ├── POInvoicePage.jsx
-│   │   ├── ActivityLogsPage.jsx
-│   │   └── ReportsPage.jsx
+│   ├── pages/               # Application page components
 │   ├── utils/
-│   │   ├── mockData.js          # Preloaded data for all roles
-│   │   └── formatters.js        # Date/Currency helper functions
+│   │   ├── mockData.js          # Mock ERP initial database
+│   │   └── formatters.js        # Formatting utilities
 │   ├── App.jsx              # Main routing & guards
-│   ├── index.css            # Base design system & components
+│   ├── index.css            # Base design system
 │   └── main.jsx             # React entrypoint
 ├── Dockerfile               # Multi-stage Docker config for Render/Railway
-├── nginx.conf               # Nginx server configuration for static deployment
-├── package.json
-└── vite.config.js
+└── nginx.conf               # Nginx server configuration
 ```
 
 ---
@@ -115,7 +140,7 @@ VendorBridge/
 ### Installation & Launch
 1. Clone the repository:
    ```bash
-   git clone https://github.com/<your-username>/VendorBridge.git
+   git clone https://github.com/Digvijay05/VendorBridge.git
    cd VendorBridge
    ```
 
@@ -130,33 +155,29 @@ VendorBridge/
    ```
    Open your browser and navigate to `http://localhost:5173`.
 
-4. Build for production:
-   ```bash
-   npm run build
-   ```
-
 ---
 
 ## 🐳 Docker Deployment
 
-The project contains a production-ready **Dockerfile** that builds the application and serves it via a lightweight Node-based static serve daemon. This setup is fully optimized for container platforms like **Render**, **Railway**, or self-hosted **Docker** environments.
+The project is configured with a production-optimized multi-stage Docker build to package static assets and serve them with fallbacks.
 
-### Running with Docker locally
+### Running locally with Docker:
+```bash
+# Build the image
+docker build -t vendorbridge:latest .
 
-1. Build the Docker image:
-   ```bash
-   docker build -t vendorbridge:latest .
-   ```
+# Run the container
+docker run -d -p 3000:3000 --name vendorbridge vendorbridge:latest
+```
 
-2. Run the container:
-   ```bash
-   docker run -d -p 3000:3000 --name vendorbridge vendorbridge:latest
-   ```
-   Access the app at `http://localhost:3000`.
+---
 
-### Deploying to Render
-1. Create a new **Web Service** on Render.
-2. Connect this repository.
-3. Render will automatically detect the `Dockerfile` in the root.
-4. Set the environment variable `PORT` to `10000` (or let Render assign it).
-5. Deploy! Render will build the static bundle and serve it reliably.
+## 🔐 Demo Accounts
+Sign in with the password `pass123` to test role-specific functionalities:
+
+| Role | Email |
+|------|-------|
+| **Procurement Officer** | `officer@vendorbridge.com` |
+| **Vendor Representative** | `vendor@vendorbridge.com` |
+| **Finance Manager / Approver** | `manager@vendorbridge.com` |
+| **System Administrator** | `admin@vendorbridge.com` |
